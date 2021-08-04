@@ -6,7 +6,7 @@
 /*   By: cjulienn <cjulienn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 13:28:43 by cjulienn          #+#    #+#             */
-/*   Updated: 2021/08/04 15:15:35 by cjulienn         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:25:51 by cjulienn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	unsigned long	counter;
+	size_t	counter;
 
 	counter = 0;
 	while (str[counter])
@@ -47,7 +47,7 @@ char	*ft_strchr(const char *s, int c)
 		return (NULL);
 }
 
-char	*ft_strjoin_and_free(char const *s1, char const *s2)
+char	*ft_strjoin_and_free(const char *s1, const char *s2)
 {
 	char			*copy;
 	size_t			i;
