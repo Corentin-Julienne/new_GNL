@@ -6,7 +6,7 @@
 /*   By: cjulienn <cjulienn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 13:28:45 by cjulienn          #+#    #+#             */
-/*   Updated: 2021/08/04 13:41:52 by cjulienn         ###   ########.fr       */
+/*   Updated: 2021/08/04 13:51:39 by cjulienn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 char	*ft_output(ssize_t reader, char	**line, int iter)
 {
 	char	*rtn;
-	
+
 	if (reader < 0)
 		return (NULL);
 	if (reader == 0 && *line[0] == '\0')
@@ -94,17 +94,27 @@ char	*ft_cut_line(ssize_t reader, char *line)
 	return (cutted_stc);
 }
 
-char	*get_next_line(int fd)
+char	*manage_errors(int fd)
 {
-	static char		*line = NULL;
-	char			*buffer;
-	ssize_t 		reader;
-	static int		iter = -1;			
+	char	*buffer;
 
-	iter++;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (!buffer)
+		return (NULL);
+	return (buffer);
+}
+
+char	*get_next_line(int fd)
+{
+	static char		*line = NULL;
+	static int		iter = -1;
+	char			*buffer;
+	ssize_t			reader;
+
+	iter++;
+	buffer = manage_errors(fd);
 	if (!buffer)
 		return (NULL);
 	reader = 1;
@@ -112,13 +122,13 @@ char	*get_next_line(int fd)
 	{
 		reader = read(fd, buffer, BUFFER_SIZE);
 		if (reader < 0)
-			break;
+			break ;
 		buffer[reader] = '\0';
 		if (!line)
 			line = ft_strdup("");
 		line = ft_strjoin_and_free(line, buffer);
 		if (!line)
-			break;
+			break ;
 	}
 	free(buffer);
 	return (ft_output(reader, &line, iter));
