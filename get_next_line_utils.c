@@ -6,7 +6,7 @@
 /*   By: cjulienn <cjulienn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 13:28:43 by cjulienn          #+#    #+#             */
-/*   Updated: 2021/08/04 12:45:44 by cjulienn         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:15:35 by cjulienn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char	*ft_strjoin_and_free(char const *s1, char const *s2)
 	size_t			i;
 	size_t			j;
 
+	if (!s1)
+		return (NULL);
 	copy = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * (sizeof(char)));
 	if (!(copy))
 		return (NULL);
@@ -74,12 +76,14 @@ char	*ft_strjoin_and_free(char const *s1, char const *s2)
 	return (copy);
 }
 
-char	*ft_strdup(const char *str)
+char	*ft_protec_strdup(const char *str)
 {
 	char				*copy;
 	unsigned long		sizer;
 	int					i;
 
+	if (!str)
+		return (NULL);
 	sizer = ft_strlen(str) + 1;
 	copy = malloc(sizer * (sizeof(char)));
 	if (!(copy))

@@ -6,7 +6,7 @@
 /*   By: cjulienn <cjulienn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 13:28:47 by cjulienn          #+#    #+#             */
-/*   Updated: 2021/08/04 13:45:20 by cjulienn         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:16:59 by cjulienn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_cut_rtn(const char *line);
 char	*ft_cut_line(ssize_t reader, char *line);
 char	*ft_strjoin_and_free(char const *s1, char const *s2);
 char	*ft_strchr(const char *str, int c);
-char	*ft_strdup(const char *str);
+char	*ft_protec_strdup(const char *str);
 size_t	ft_strlen(const char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: cjulienn <cjulienn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 13:28:45 by cjulienn          #+#    #+#             */
-/*   Updated: 2021/08/04 13:51:39 by cjulienn         ###   ########.fr       */
+/*   Updated: 2021/08/04 15:16:33 by cjulienn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,17 @@ char	*ft_output(ssize_t reader, char	**line, int iter)
 
 	if (reader < 0)
 		return (NULL);
-	if (reader == 0 && *line[0] == '\0')
+	if (reader == 0 && *line && *line[0] == '\0')
 	{
 		if (iter > 0)
 			free((void *)*line);
 		return (NULL);
 	}
-	if (reader == 0 && *line == NULL)
-		return (NULL);
-	if (reader > 0 && *line == NULL)
-		return (NULL);
 	rtn = ft_cut_rtn(*line);
 	if (!rtn)
 		return (NULL);
 	*line = ft_cut_line(reader, *line);
-	if (reader > 0)
-		return (rtn);
-	else if (reader == 0 && *line == NULL)
+	if (reader > 0 || (reader == 0 && *line == NULL))
 		return (rtn);
 	else
 		return (NULL);
@@ -83,11 +77,11 @@ char	*ft_cut_line(ssize_t reader, char *line)
 		return (NULL);
 	}
 	if (ft_strchr(line, '\n') && ft_strlen(ft_strchr(line, '\n')) > 1)
-		cutted_stc = ft_strdup(ft_strchr(line, '\n') + 1);
+		cutted_stc = ft_protec_strdup(ft_strchr(line, '\n') + 1);
 	else if (ft_strchr(line, '\n') && ft_strlen(ft_strchr(line, '\n')) == 1)
-		cutted_stc = ft_strdup("");
+		cutted_stc = ft_protec_strdup("");
 	else
-		cutted_stc = ft_strdup(line);
+		cutted_stc = ft_protec_strdup(line);
 	free((void *)line);
 	if (!cutted_stc)
 		return (NULL);
@@ -125,10 +119,10 @@ char	*get_next_line(int fd)
 			break ;
 		buffer[reader] = '\0';
 		if (!line)
-			line = ft_strdup("");
+			line = ft_protec_strdup("");
 		line = ft_strjoin_and_free(line, buffer);
 		if (!line)
-			break ;
+			return (NULL);
 	}
 	free(buffer);
 	return (ft_output(reader, &line, iter));
