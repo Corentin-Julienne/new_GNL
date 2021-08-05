@@ -6,13 +6,11 @@
 /*   By: cjulienn <cjulienn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 13:28:45 by cjulienn          #+#    #+#             */
-/*   Updated: 2021/08/04 15:16:33 by cjulienn         ###   ########.fr       */
+/*   Updated: 2021/08/05 13:42:39 by cjulienn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <string.h>
 
 char	*ft_output(ssize_t reader, char	**line, int iter)
 {
@@ -23,7 +21,10 @@ char	*ft_output(ssize_t reader, char	**line, int iter)
 	if (reader == 0 && *line && *line[0] == '\0')
 	{
 		if (iter > 0)
+		{
 			free((void *)*line);
+			*line = NULL;
+		}	
 		return (NULL);
 	}
 	rtn = ft_cut_rtn(*line);
@@ -74,6 +75,7 @@ char	*ft_cut_line(ssize_t reader, char *line)
 	if (reader == 0)
 	{
 		free((void *)line);
+		line = NULL;
 		return (NULL);
 	}
 	if (ft_strchr(line, '\n') && ft_strlen(ft_strchr(line, '\n')) > 1)
@@ -83,6 +85,7 @@ char	*ft_cut_line(ssize_t reader, char *line)
 	else
 		cutted_stc = ft_protec_strdup(line);
 	free((void *)line);
+	line = NULL;
 	if (!cutted_stc)
 		return (NULL);
 	return (cutted_stc);
@@ -122,7 +125,7 @@ char	*get_next_line(int fd)
 			line = ft_protec_strdup("");
 		line = ft_strjoin_and_free(line, buffer);
 		if (!line)
-			return (NULL);
+			return (ft_free_and_return(&buffer, NULL));
 	}
 	free(buffer);
 	return (ft_output(reader, &line, iter));

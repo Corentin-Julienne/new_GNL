@@ -6,7 +6,7 @@
 /*   By: cjulienn <cjulienn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 13:28:43 by cjulienn          #+#    #+#             */
-/*   Updated: 2021/08/04 15:25:51 by cjulienn         ###   ########.fr       */
+/*   Updated: 2021/08/05 13:46:25 by cjulienn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,10 @@ char	*ft_strjoin_and_free(const char *s1, const char *s2)
 	}
 	j = 0;
 	while (s2[j])
-	{
-		copy[i] = s2[j];
-		i++;
-		j++;
-	}
+		copy[i++] = s2[j++];
 	copy[i] = '\0';
 	free((void *)s1);
+	s1 = NULL;
 	return (copy);
 }
 
@@ -96,4 +93,14 @@ char	*ft_protec_strdup(const char *str)
 	}
 	copy[i] = '\0';
 	return (copy);
+}
+
+char	*ft_free_and_return(char **buffer, char *rtn_value)
+{
+	if (*buffer)
+	{
+		free(*buffer);
+		*buffer = NULL;
+	}
+	return (rtn_value);
 }
